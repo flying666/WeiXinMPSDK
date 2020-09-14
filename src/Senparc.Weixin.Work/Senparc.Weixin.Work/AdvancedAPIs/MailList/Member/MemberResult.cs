@@ -15,6 +15,16 @@
 
     修改标识：Senparc - 20171017
     修改描述：v1.2.0 部门id改为long类型
+
+    修改标识：lishewen - 20200318
+    修改描述：v3.7.401 修改 is_leader_in_dept 属性命名和类型
+
+    修改标识：WangDrama - 20200430
+    修改描述：v3.7.502 GetMemberResult 补充二维码属性
+
+    修改标识：Senparc - 2020825
+    修改描述：3.7.510.1 GetMemberResult 补充 open_userid、main_department（主部门）属性
+
 ----------------------------------------------------------------*/
 
 using System.Collections.Generic;
@@ -66,7 +76,7 @@ namespace Senparc.Weixin.Work.AdvancedAPIs.MailList
         /// <summary>
         /// 上级字段，标识是否为上级。第三方暂不支持
         /// </summary>
-        public int isleader { get; set; }
+        public int[] is_leader_in_dept { get; set; }
         /// <summary>
         /// 头像url。注：小图将url最后的"/0"改成"/64"
         /// </summary>
@@ -84,6 +94,15 @@ namespace Senparc.Weixin.Work.AdvancedAPIs.MailList
         /// </summary>
         public string english_name { get; set; }
         /// <summary>
+        /// 全局唯一。对于同一个服务商，不同应用获取到企业内同一个成员的open_userid是相同的，最多64个字节。仅第三方应用可获取
+        /// </summary>
+        public string open_userid { get; set; }
+        /// <summary>
+        /// 主部门
+        /// </summary>
+        public int main_department { get; set; }
+
+        /// <summary>
         /// 扩展属性
         /// </summary>
         public Extattr extattr { get; set; }
@@ -95,6 +114,11 @@ namespace Senparc.Weixin.Work.AdvancedAPIs.MailList
         /// 关注微信插件的状态: 1=已关注，0=未关注
         /// </summary>
         public string wxplugin_status { get; set; }
+
+        /// <summary>
+        /// 员工个人二维码，扫描可添加为外部联系人(注意返回的是一个url，可在浏览器上打开该url以展示二维码)；第三方仅通讯录应用可获取
+        /// </summary>
+        public string qr_code { get; set; }
     }
 
     public class GetDepartmentMemberResult : WorkJsonResult

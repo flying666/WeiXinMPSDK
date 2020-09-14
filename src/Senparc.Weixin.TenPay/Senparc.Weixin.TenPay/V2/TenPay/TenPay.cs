@@ -1,7 +1,7 @@
 ﻿#region Apache License Version 2.0
 /*----------------------------------------------------------------
 
-Copyright 2019 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
+Copyright 2020 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
 except in compliance with the License. You may obtain a copy of the License at
@@ -49,7 +49,7 @@ namespace Senparc.Weixin.TenPay.V2
     /// </summary>
     public static class TenPay
     {
-        #region 同步方法
+         #region 同步方法
         
        /*此接口不提供异步方法*/
         /// <summary>
@@ -130,7 +130,6 @@ namespace Senparc.Weixin.TenPay.V2
             return CommonJsonSend.Send<OrderqueryResult>(accessToken, urlFormat, data);
         }
         #endregion
-
 
         #region 异步方法
         /// <summary>

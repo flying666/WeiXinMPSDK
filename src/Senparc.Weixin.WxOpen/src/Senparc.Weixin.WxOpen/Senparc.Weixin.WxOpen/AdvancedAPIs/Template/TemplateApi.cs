@@ -1,7 +1,7 @@
 ﻿#region Apache License Version 2.0
 /*----------------------------------------------------------------
 
-Copyright 2019 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
+Copyright 2020 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
 except in compliance with the License. You may obtain a copy of the License at
@@ -83,7 +83,7 @@ namespace Senparc.Weixin.WxOpen.AdvancedAPIs.Template
             return WxOpenApiHandlerWapper.TryCommonApi(accessToken =>
             {
                 string urlFormat = Config.ApiMpHost + "/cgi-bin/message/wxopen/template/send?access_token={0}";
-                var msgData = new TempleteModel()
+                var msgData = new TemplateModel()
                 {
                     touser = openId,
                     template_id = templateId,
@@ -280,7 +280,7 @@ namespace Senparc.Weixin.WxOpen.AdvancedAPIs.Template
             return await WxOpenApiHandlerWapper.TryCommonApiAsync(async accessToken =>
             {
                 string urlFormat = Config.ApiMpHost + "/cgi-bin/message/wxopen/template/send?access_token={0}";
-                var msgData = new TempleteModel()
+                var msgData = new TemplateModel()
                 {
                     touser = openId,
                     template_id = templateId,

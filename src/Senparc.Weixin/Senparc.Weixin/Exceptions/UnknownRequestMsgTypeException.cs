@@ -1,7 +1,7 @@
 ﻿#region Apache License Version 2.0
 /*----------------------------------------------------------------
 
-Copyright 2019 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
+Copyright 2020 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
 except in compliance with the License. You may obtain a copy of the License at
@@ -40,7 +40,7 @@ namespace Senparc.Weixin.Exceptions
     /// <summary>
     /// 未知请求类型异常
     /// </summary>
-    public class UnknownRequestMsgTypeException : MessageHandlerException //ArgumentOutOfRangeException
+    public class UnknownRequestMsgTypeException : NeuChar.Exceptions.UnknownRequestMsgTypeException //ArgumentOutOfRangeException
     {
         public UnknownRequestMsgTypeException(string message)
             : this(message, null)

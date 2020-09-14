@@ -1,7 +1,7 @@
 ﻿#region Apache License Version 2.0
 /*----------------------------------------------------------------
 
-Copyright 2019 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
+Copyright 2020 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
 except in compliance with the License. You may obtain a copy of the License at
@@ -21,7 +21,7 @@ Detail: https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md
 /*----------------------------------------------------------------
     Copyright (C) 2020 Senparc
     
-    文件名：TempleteModel.cs
+    文件名：TemplateModel.cs
     文件功能描述：小程序模板消息接口需要的数据
     
     
@@ -44,7 +44,7 @@ namespace Senparc.Weixin.WxOpen.AdvancedAPIs.Template
     /// <summary>
     /// 模板消息Post数据
     /// </summary>
-    public class TempleteModel
+    public class TemplateModel
     {
         /// <summary>
         /// 目标用户OpenId
@@ -84,7 +84,7 @@ namespace Senparc.Weixin.WxOpen.AdvancedAPIs.Template
 
 
 
-        public TempleteModel()
+        public TemplateModel()
         {
         }
     }

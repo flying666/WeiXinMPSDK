@@ -15,21 +15,21 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Senparc.Weixin.Exceptions;
-using Senparc.Weixin.MP.Entities;
-using Senparc.Weixin.MP.Helpers;
 using Senparc.NeuChar.Entities;
 using Senparc.NeuChar.Helpers;
 using Senparc.CO2NET.Utilities;
-
+//DPBMARK MP
+using Senparc.Weixin.MP.Entities;
+using Senparc.Weixin.MP.Helpers;
+//DPBMARK_END
 #if NET45
 using System.Web;
 using System.Configuration;
-//DPBMARK MP
-using Senparc.Weixin.MP.Sample.CommonService.TemplateMessage;
-//DPBMARK_END
+using Senparc.Weixin.MP.Sample.CommonService.TemplateMessage;//DPBMARK MP DPBMARK_END
 #else
 using Microsoft.AspNetCore.Http;
-using Senparc.Weixin.MP.Sample.CommonService.TemplateMessage;
+
+using Senparc.Weixin.MP.Sample.CommonService.TemplateMessage;//DPBMARK MP DPBMARK_END
 using Senparc.Weixin.MP.Sample.CommonService.Utilities;
 #endif
 
@@ -41,6 +41,8 @@ namespace Senparc.Weixin.MP.Sample.CommonService
     /// </summary>
     public class EventService
     {
+        #region DPBMARK MP
+
         /// <summary>
         /// 微信MessageHandler事件处理，此代码的简化MessageHandler方法已由/CustomerMessageHandler/CustomerMessageHandler_Event.cs完成，
         /// 此方法不再更新
@@ -102,6 +104,9 @@ namespace Senparc.Weixin.MP.Sample.CommonService
             return responseMessage;
         }
 
+        #endregion DPBMARK_END
+
+
         public async Task ConfigOnWeixinExceptionFunc(WeixinException ex)
         {
             Senparc.Weixin.WeixinTrace.SendCustomLog("进入 ConfigOnWeixinExceptionFunc() 方法", ex.Message);
@@ -109,7 +114,7 @@ namespace Senparc.Weixin.MP.Sample.CommonService
             {
                 var appId = Config.SenparcWeixinSetting.WeixinAppId;
 
-                string openId = "";//收到通知的管理员OpenId
+                string openId = "olPjZjsXuQPJoV0HlruZkNzKc91E";//收到通知的管理员OpenId
                 var host = "A1 / AccessTokenOrAppId：" + (ex.AccessTokenOrAppId ?? "null");
                 string service = null;
                 string message = ex.Message;
@@ -122,20 +127,23 @@ namespace Senparc.Weixin.MP.Sample.CommonService
                 if (ex is ErrorJsonResultException)
                 {
                     var jsonEx = (ErrorJsonResultException)ex;
-                    service = jsonEx.Url;
+                    service = $"{jsonEx.JsonResult?.errcode}:{jsonEx.JsonResult?.errmsg} - {jsonEx.Url?.Replace("https://api.weixin.qq.com/cgi-bin", "ApiUrl")}".Substring(0, 30);
                     message = jsonEx.Message;
 
                     //需要忽略的类型
                     var ignoreErrorCodes = new[]
                     {
                                 ReturnCode.获取access_token时AppSecret错误或者access_token无效,
+                                ReturnCode.access_token超时,
                                 ReturnCode.template_id不正确,
                                 ReturnCode.缺少access_token参数,
+                                ReturnCode.回复时间超过限制,
                                 ReturnCode.api功能未授权,
                                 ReturnCode.用户未授权该api,
                                 ReturnCode.参数错误invalid_parameter,
                                 ReturnCode.接口调用超过限制,
                                 ReturnCode.需要接收者关注,//43004
+                                ReturnCode.超出响应数量限制,//43004 - out of response count limit，一般只允许连续接收20条客服消息
 
                                 //其他更多可能的情况
                             };
@@ -165,8 +173,13 @@ namespace Senparc.Weixin.MP.Sample.CommonService
                     //修改OpenId、启用以下代码后即可收到模板消息
                     if (!string.IsNullOrEmpty(openId))
                     {
-                        var result = await Senparc.Weixin.MP.AdvancedAPIs.TemplateApi.SendTemplateMessageAsync(appId, openId, data.TemplateId,
+                        var result = Senparc.Weixin.MP.AdvancedAPIs.TemplateApi.SendTemplateMessageAsync(appId, openId, data.TemplateId,
                           url, data);
+                        Task.WaitAll(new[] { result });
+                        if (result.IsFaulted)
+                        {
+                            Senparc.Weixin.WeixinTrace.SendCustomLog("OnWeixinExceptionFunc过程模板消息发送异常", result.Exception?.Message + "\r\n" + result.Exception?.StackTrace);
+                        }
                     }
                 }                           // DPBMARK_END
             }

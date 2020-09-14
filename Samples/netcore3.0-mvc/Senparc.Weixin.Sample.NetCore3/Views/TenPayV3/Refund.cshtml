@@ -1,4 +1,5 @@
-﻿
+﻿@*DPBMARK_FILE TenPay*@
+
 @{
     Layout = null;
 }
@@ -14,6 +15,6 @@
     <h2>@ViewData["Message"]</h2>
 
     <p>&nbsp;</p>
-    <p>@Html.ActionLink("返回支付首页", "ProductList")</p>
+    <p><a href="javascript:location.reload();">刷新状态</a>  |  @Html.ActionLink("返回支付首页", "ProductList")</p>
 </body>
 </html>
